@@ -1,7 +1,7 @@
 /// <reference lib="esnext.asynciterable" />
 /// <reference lib="es2015.promise" />
 import octokit = require("@octokit/rest");
-import Octokit = octokit.Octokit;
+const Octokit = (octokit as any).Octokit;
 import minimist = require("minimist");
 
 const options = minimist(process.argv.slice(2), {
@@ -42,7 +42,7 @@ main().catch(console.error);
 
 async function main() {
     const gh = new Octokit({ auth: options.token });
-    const response = await gh.pulls.requestReviewers({
+    const response = await gh.pulls.createReviewRequest({
         owner: options.owner,
         repo: options.repo,
         pull_number,
